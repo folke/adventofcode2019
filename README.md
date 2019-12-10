@@ -29,6 +29,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`adventofcode day1 [FILE]`](#adventofcode-day1-file)
+* [`adventofcode day10 [FILE]`](#adventofcode-day10-file)
 * [`adventofcode day2 [FILE]`](#adventofcode-day2-file)
 * [`adventofcode day3 [FILE]`](#adventofcode-day3-file)
 * [`adventofcode day4 [FILE]`](#adventofcode-day4-file)
@@ -55,6 +56,22 @@ OPTIONS
 ```
 
 _See code: [src/commands/day1.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day1.ts)_
+
+## `adventofcode day10 [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ adventofcode day10 [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/day10.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day10.ts)_
 
 ## `adventofcode day2 [FILE]`
 

@@ -122,19 +122,43 @@ class Computer {
   }
 
   continue() {
+    var start = new Date().getTime()
+    const debug = false
+    var debugData = {
+      step: 0,
+      pointer: 0,
+      relbase: 0,
+      programL: '',
+      programB: '',
+      programA: '',
+      output: '',
+    }
+
     while(this.p < this.program.length) {
-      var debug = {
-        step: this.steps,
-        pointer: this.p,
-        relbase: this.relativeBase,
-        programL: this.program.slice(this.p, this.p + 3).join(),
-        programB: this.program.join(),
-        programA: '',
-        output: '',
-      }
+      if (debug)
+        debugData = {
+          step: this.steps,
+          pointer: this.p,
+          relbase: this.relativeBase,
+          programL: this.program.slice(this.p, this.p + 3).join(),
+          programB: this.program.join(),
+          programA: '',
+          output: '',
+        }
       this._step()
-      debug.programA = this.program.join()
-      debug.output = this.output.join()
+
+      if (debug) {
+        debugData.programA = this.program.join()
+        debugData.output = this.output.join()
+      }
+
+      if (this.steps % 1000 == 0) {
+        var now = new Date().getTime()
+        console.log({
+          steps: this.steps, 
+          perSecond: 1000 * this.steps / (now - start),
+        })
+      }
       // console.log(this.steps)
       // if (this.output.length > 0) return
       // if (this.steps > 10) return
@@ -170,7 +194,7 @@ export default class Day5 extends Command {
       // code = "1102,34915192,34915192,7,4,7,99,0"
       // code = "104,1125899906842624,99"
       var machine = new Computer(code)
-      machine.run([1])
+      machine.run([2])
       console.log(machine.output.join())
     } catch (error) {
       this.error(error);
