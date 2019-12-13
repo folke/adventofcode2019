@@ -1,4 +1,5 @@
 import {Command, flags} from '@oclif/command'
+import * as readline from 'readline';
 
 class Computer {
   code: string;
@@ -176,15 +177,31 @@ class Arcade {
   joystick = 0
   score = 0
   program: Computer
+  rl: readline.Interface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
   constructor(code: string) {
     this.program = new Computer(code)
     this.program.run([], false)
     this.program.program[0] = 2
+    readline.cursorTo(process.stdout, 0, 0)
+    readline.clearScreenDown(process.stdout)
     this.loop()
   }
 
+  draw() {
+    var chars = [' ', '🔲', '💎', '🛶', '🥎']
+    this.tiles.forEach((v, k: string) => {
+      let pos = k.split(' ').map(x => parseInt(x, 10))
+      readline.cursorTo(process.stdout, pos[0], pos[1])
+      process.stdout.write(chars[v])
+    })
+    // Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 10);
+  }
+
   _processOutput() {
-    console.log(this.program.output)
+    // console.log(this.program.output)
     for(let i = 0; i < this.program.output.length; i+=3) {
       var loc = `${this.program.output[i]} ${this.program.output[i+1]}`
       if (this.program.output[i] == -1) {
@@ -196,6 +213,7 @@ class Arcade {
       if (this.program.output[i+2] == 3) this.paddle = [this.program.output[i], this.program.output[i+1]]
     }
     this.program.output = []
+    // this.draw()
   }
 
   loop() {
@@ -206,8 +224,8 @@ class Arcade {
     if (this.paddle[0] < this.ball[0]) this.joystick = 1
     else if (this.paddle[0] > this.ball[0]) this.joystick = -1
     else this.joystick = 0
-    console.log({ball: this.ball, paddle: this.paddle, score: this.score})
-    console.log(this.program.running)
+    // console.log({ball: this.ball, paddle: this.paddle, score: this.score})
+    // console.log(this.program.running)
   }
 }
 
@@ -219,7 +237,7 @@ export default class Day13 extends Command {
     while(arcade.program.running) {
       arcade.loop()
     }
-    // console.log(arcade)
+    console.log(arcade.score)
     
   }
 }
