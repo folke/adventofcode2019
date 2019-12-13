@@ -31,7 +31,8 @@ USAGE
 * [`adventofcode day1 [FILE]`](#adventofcode-day1-file)
 * [`adventofcode day10`](#adventofcode-day10)
 * [`adventofcode day11`](#adventofcode-day11)
-* [`adventofcode day12 [FILE]`](#adventofcode-day12-file)
+* [`adventofcode day12`](#adventofcode-day12)
+* [`adventofcode day13 [FILE]`](#adventofcode-day13-file)
 * [`adventofcode day2 [FILE]`](#adventofcode-day2-file)
 * [`adventofcode day3 [FILE]`](#adventofcode-day3-file)
 * [`adventofcode day4 [FILE]`](#adventofcode-day4-file)
@@ -77,13 +78,22 @@ USAGE
 
 _See code: [src/commands/day11.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day11.ts)_
 
-## `adventofcode day12 [FILE]`
+## `adventofcode day12`
+
+```
+USAGE
+  $ adventofcode day12
+```
+
+_See code: [src/commands/day12.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day12.ts)_
+
+## `adventofcode day13 [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ adventofcode day12 [FILE]
+  $ adventofcode day13 [FILE]
 
 OPTIONS
   -f, --force
@@ -91,7 +101,7 @@ OPTIONS
   -n, --name=name  name to print
 ```
 
-_See code: [src/commands/day12.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day12.ts)_
+_See code: [src/commands/day13.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day13.ts)_
 
 ## `adventofcode day2 [FILE]`
 
