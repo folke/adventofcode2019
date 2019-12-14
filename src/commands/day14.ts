@@ -39,7 +39,8 @@ class Factory {
     }
 
     let reaction = this.reactions.get(element)
-    var times = Math.ceil(needed / reaction?.amount)
+    if (!reaction) return 0
+    var times = Math.ceil(needed / reaction.amount)
 
     let ore = 0
     reaction?.input.forEach((amount, el) => {
