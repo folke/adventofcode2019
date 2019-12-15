@@ -333,7 +333,7 @@ class Maze {
           // console.log({cell:cell, ahead:ahead, symbol:symbol})
           if (symbol != "#") {
             if (dists.has(ahead[0], ahead[1])) {
-              if (cell[2] + 1 < dists.get(ahead[0], ahead[1])) {
+              if (cell[2] + 1 < (dists.get(ahead[0], ahead[1]) || 0)) {
                 dists.set(ahead[0], ahead[1], cell[2] + 1);
               }
             } else {
