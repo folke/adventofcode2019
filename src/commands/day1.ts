@@ -1,47 +1,29 @@
-import {Command, flags} from '@oclif/command'
-const lr = require('line-reader')
-
-
-
+import { Command } from '@oclif/command'
 function fuel(mass: number) {
-  return Math.floor(mass / 3) -2
+    return Math.floor(mass / 3) - 2
 }
 
 export default class Day1 extends Command {
-  static description = 'describe the command here'
+    async run() {
+        console.log(fuel(12))
 
-  static flags = {
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
-  }
+        const input =
+            '94735 80130 127915 145427 89149 91232 100629 97340 86278 87034 147351 123045 91885 85973 64130 113244 58968 76296 127931 98145 120731 98289 110340 118285 60112 57177 58791 59012 66950 139387 145378 86204 147082 84956 134161 148664 74278 96746 144525 81214 70966 107050 134179 138587 80236 139871 104439 64643 145453 94791 51690 94189 148476 79956 81760 149796 109544 57533 142999 126419 115434 57092 64244 109663 94701 109265 145851 95183 84433 53818 106234 127380 149774 59601 138851 54488 100877 136952 61538 67705 60299 130769 113176 106723 133280 111065 63688 139307 122703 60162 89567 63994 66608 126376 136052 112255 98525 134023 141479 98200'
+        let totalFuel = 0
 
-  static args = [{name: 'file'}]
+        input
+            .split('\n')
+            .map(x => parseInt(x, 10))
+            .forEach(mass => {
+                let f = fuel(mass)
+                do {
+                    totalFuel += f
+                    mass = f
+                    f = fuel(mass)
+                } while (f > 0)
+            })
+        console.log(totalFuel)
 
-  async run() {
-    
-    this.log(fuel(12) + '')
-    var that = this;
-
-    var totalFuel = 0;
-
-    await lr.eachLine('./src/data/1.1.txt', function(line: string, last: boolean) {
-      var mass = parseInt(line)
-      var f = fuel(mass)
-      do {
-        totalFuel += f
-        mass = f
-        f = fuel(mass)
-      } while(f > 0)
-      
-      // totalFuel += fuel(parseInt(line))
-      if (last)
-        that.log(totalFuel+'')
-    });
-
-    this.log(totalFuel + '')
-
-  }
+        this.log(String(totalFuel))
+    }
 }

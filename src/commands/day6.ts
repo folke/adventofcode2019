@@ -1,77 +1,54 @@
-import {Command, flags} from '@oclif/command'
+import { Command } from '@oclif/command'
 
 export default class Day6 extends Command {
-  static description = 'describe the command here'
+    async run() {
+        const nodes = new Map()
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        data.split('\n').map(orbit => {
+            const pair = orbit.split(')')
+            if (!nodes.has(pair[0])) {
+                nodes.set(pair[0], [])
+            }
+            nodes.get(pair[0]).push(pair[1])
+        })
+        console.log(nodes)
 
-  static flags = {
-    help: flags.help({char: 'h'}),
-    // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
-    // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
-  }
+        function path(node: string, find: string): string[] {
+            const children: string[] = nodes.get(node)
+            console.log({ node: node, kids: children })
+            if (node == find) return [node]
 
-  static args = [{name: 'file'}]
-
-  async run() {
-    
-    var nodes = new Map()
-    data.split("\n").map(orbit => {
-      var pair = orbit.split(")")
-      if (!nodes.has(pair[0])) {
-        nodes.set(pair[0], [])
-      }
-      nodes.get(pair[0]).push(pair[1])
-    })
-    console.log(nodes)
-
-    var checksum = 0
-
-    function walk(node: string, depth: number = 0) {
-      checksum+=depth
-      var children: string[] = nodes.get(node)
-      if (children) {
-        children.forEach(child => {
-          walk(child, depth + 1)
-        });
-      }
-    }
-
-    function path(node: string, find: string): string[] {
-      var children: string[] = nodes.get(node)
-      console.log({node: node, kids: children})
-      if (node == find) return [node]
-          
-      if (children) {
-        for (let c in children) {
-          var child = children[c]
-          var r = path(child, find)
-          if (r.length > 0) {
-            console.log([child, [node].concat(r)])
-            return [node].concat(r)
-          }
+            if (children) {
+                for (const c in children) {
+                    const child = children[c]
+                    const r = path(child, find)
+                    if (r.length > 0) {
+                        console.log([child, [node].concat(r)])
+                        return [node].concat(r)
+                    }
+                }
+            }
+            return []
         }
-      }
-      return []
+
+        const you = path('COM', 'YOU')
+        const san = path('COM', 'SAN')
+
+        let common = 0
+        while (you[common] == san[common]) {
+            common++
+        }
+
+        const transfers = you.length + san.length - 2 * common - 2
+
+        console.log(you)
+        console.log(san)
+        console.log(common)
+        console.log(transfers)
     }
-
-    var you = path("COM", "YOU")
-    var san = path("COM", "SAN")
-
-    var common = 0
-    while(you[common] == san[common]) {
-      common++
-    }
-
-    var transfers = you.length + san.length - 2 * common - 2
-    
-    console.log(you)
-    console.log(san)
-    console.log(common)
-    console.log(transfers)
-  }
 }
 
+// eslint-disable-next-line no-var
 var data = `FGY)61Z
 2BN)LM7
 QXY)TVB

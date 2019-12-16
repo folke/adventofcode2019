@@ -1,7 +1,4 @@
-adventofcode
-============
-
-
+# adventofcode
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/adventofcode.svg)](https://npmjs.org/package/adventofcode)
@@ -9,11 +6,15 @@ adventofcode
 [![License](https://img.shields.io/npm/l/adventofcode.svg)](https://github.com/folke/adventofcode/blob/master/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
+
+-   [Usage](#usage)
+-   [Commands](#commands)
+    <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g adventofcode
 $ adventofcode COMMAND
@@ -25,27 +26,30 @@ USAGE
   $ adventofcode COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`adventofcode day1 [FILE]`](#adventofcode-day1-file)
-* [`adventofcode day10`](#adventofcode-day10)
-* [`adventofcode day11`](#adventofcode-day11)
-* [`adventofcode day12`](#adventofcode-day12)
-* [`adventofcode day13`](#adventofcode-day13)
-* [`adventofcode day14`](#adventofcode-day14)
-* [`adventofcode day15`](#adventofcode-day15)
-* [`adventofcode day16 [FILE]`](#adventofcode-day16-file)
-* [`adventofcode day2 [FILE]`](#adventofcode-day2-file)
-* [`adventofcode day3 [FILE]`](#adventofcode-day3-file)
-* [`adventofcode day4 [FILE]`](#adventofcode-day4-file)
-* [`adventofcode day5 [FILE]`](#adventofcode-day5-file)
-* [`adventofcode day6 [FILE]`](#adventofcode-day6-file)
-* [`adventofcode day7`](#adventofcode-day7)
-* [`adventofcode day8`](#adventofcode-day8)
-* [`adventofcode day9`](#adventofcode-day9)
-* [`adventofcode hello [FILE]`](#adventofcode-hello-file)
-* [`adventofcode help [COMMAND]`](#adventofcode-help-command)
+
+-   [`adventofcode day1 [FILE]`](#adventofcode-day1-file)
+-   [`adventofcode day10`](#adventofcode-day10)
+-   [`adventofcode day11`](#adventofcode-day11)
+-   [`adventofcode day12`](#adventofcode-day12)
+-   [`adventofcode day13`](#adventofcode-day13)
+-   [`adventofcode day14`](#adventofcode-day14)
+-   [`adventofcode day15`](#adventofcode-day15)
+-   [`adventofcode day16 [FILE]`](#adventofcode-day16-file)
+-   [`adventofcode day2 [FILE]`](#adventofcode-day2-file)
+-   [`adventofcode day3 [FILE]`](#adventofcode-day3-file)
+-   [`adventofcode day4 [FILE]`](#adventofcode-day4-file)
+-   [`adventofcode day5 [FILE]`](#adventofcode-day5-file)
+-   [`adventofcode day6 [FILE]`](#adventofcode-day6-file)
+-   [`adventofcode day7`](#adventofcode-day7)
+-   [`adventofcode day8`](#adventofcode-day8)
+-   [`adventofcode day9`](#adventofcode-day9)
+-   [`adventofcode help [COMMAND]`](#adventofcode-help-command)
 
 ## `adventofcode day1 [FILE]`
 
@@ -240,26 +244,6 @@ USAGE
 
 _See code: [src/commands/day9.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day9.ts)_
 
-## `adventofcode hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ adventofcode hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ adventofcode hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/hello.ts)_
-
 ## `adventofcode help [COMMAND]`
 
 display help for adventofcode
@@ -276,4 +260,5 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.1/src/commands/help.ts)_
+
 <!-- commandsstop -->

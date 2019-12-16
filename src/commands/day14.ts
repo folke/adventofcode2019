@@ -1,65 +1,68 @@
-import {Command, flags} from '@oclif/command'
+import { Command } from '@oclif/command'
 
 class Reaction {
-  amount = 0
-  input: Map<string, number> = new Map()
-  constructor(amount: number, input: Map<string, number>) {
-    this.amount = amount
-    this.input = input
-  }
+    amount = 0
+
+    input: Map<string, number> = new Map()
+
+    constructor(amount: number, input: Map<string, number>) {
+        this.amount = amount
+        this.input = input
+    }
 }
 
 class Factory {
-  reactions: Map<string, Reaction> = new Map()
-  trash: Map<string, number> = new Map()
+    reactions: Map<string, Reaction> = new Map()
 
-  constructor(input: string) {
-    input.split("\n").forEach(line => {
-      let parts = line.trim().split(" => ")
-      let from = parts[0].split(", ").map(x => x.split(' '))
-      let to = parts[1].split(' ')
-      let inp = new Map<string, number>()
-      for(let i = 0; i < from.length; i++) {
-        inp.set(from[i][1], +from[i][0])
-      }
-      this.reactions.set(to[1], new Reaction(+to[0], inp))
-    })
-    console.log(this.reactions)
-  }
+    trash: Map<string, number> = new Map()
 
-  trace(element: string, needed: number): number {
-    let have = this.trash.get(element) || 0
-    // console.log({traces: [element, needed, have]})
-    if (have > needed) {
-      this.trash.set(element, have - needed)
-      return 0
-    } else {
-      this.trash.delete(element)
-      needed -= have
+    constructor(input: string) {
+        input.split('\n').forEach(line => {
+            const parts = line.trim().split(' => ')
+            const from = parts[0].split(', ').map(x => x.split(' '))
+            const to = parts[1].split(' ')
+            const inp = new Map<string, number>()
+            for (let i = 0; i < from.length; i++) {
+                inp.set(from[i][1], +from[i][0])
+            }
+            this.reactions.set(to[1], new Reaction(+to[0], inp))
+        })
+        console.log(this.reactions)
     }
 
-    let reaction = this.reactions.get(element)
-    if (!reaction) return 0
-    var times = Math.ceil(needed / reaction.amount)
+    trace(element: string, needed: number): number {
+        const have = this.trash.get(element) || 0
+        // console.log({traces: [element, needed, have]})
+        if (have > needed) {
+            this.trash.set(element, have - needed)
+            return 0
+        } else {
+            this.trash.delete(element)
+            needed -= have
+        }
 
-    let ore = 0
-    reaction?.input.forEach((amount, el) => {
-      if (el == 'ORE') ore+= amount * times
-      else {
-        ore += this.trace(el, amount * times)
-      }
-    })
+        const reaction = this.reactions.get(element)
+        if (!reaction) return 0
+        const times = Math.ceil(needed / reaction.amount)
 
-    var leftover = times * reaction?.amount - needed
-    if (leftover) this.trash.set(element, leftover)
-    // console.log({produce: [element, times, leftover]})
-    return ore
-  }
+        let ore = 0
+        reaction?.input.forEach((amount, el) => {
+            if (el == 'ORE') ore += amount * times
+            else {
+                ore += this.trace(el, amount * times)
+            }
+        })
+
+        const leftover = times * reaction?.amount - needed
+        if (leftover) this.trash.set(element, leftover)
+        // console.log({produce: [element, times, leftover]})
+        return ore
+    }
 }
 
 export default class Day14 extends Command {
-  async run() {
-   var input = `2 MPHSH, 3 NQNX => 3 FWHL
+    async run() {
+        const input = `2 MPHSH, 3 NQNX => 3 FWHL
    144 ORE => 1 CXRVG
    1 PGNF => 8 KHFD
    3 JDVXN => 5 FSTFV
@@ -114,37 +117,36 @@ export default class Day14 extends Command {
    1 WDPCN, 5 FWHL => 8 PTZNC
    1 ZNSV => 9 VGNR
    5 PGNF => 5 QNZVM`
-  //  input = `171 ORE => 8 CNZTR
-  //  7 ZLQW, 3 BMBT, 9 XCVML, 26 XMNCP, 1 WPTQ, 2 MZWV, 1 RJRHP => 4 PLWSL
-  //  114 ORE => 4 BHXH
-  //  14 VRPVC => 6 BMBT
-  //  6 BHXH, 18 KTJDG, 12 WPTQ, 7 PLWSL, 31 FHTLT, 37 ZDVW => 1 FUEL
-  //  6 WPTQ, 2 BMBT, 8 ZLQW, 18 KTJDG, 1 XMNCP, 6 MZWV, 1 RJRHP => 6 FHTLT
-  //  15 XDBXC, 2 LTCX, 1 VRPVC => 6 ZLQW
-  //  13 WPTQ, 10 LTCX, 3 RJRHP, 14 XMNCP, 2 MZWV, 1 ZLQW => 1 ZDVW
-  //  5 BMBT => 4 WPTQ
-  //  189 ORE => 9 KTJDG
-  //  1 MZWV, 17 XDBXC, 3 XCVML => 2 XMNCP
-  //  12 VRPVC, 27 CNZTR => 2 XDBXC
-  //  15 KTJDG, 12 BHXH => 5 XCVML
-  //  3 BHXH, 2 VRPVC => 7 MZWV
-  //  121 ORE => 7 VRPVC
-  //  7 XCVML => 6 RJRHP
-  //  5 BHXH, 4 VRPVC => 5 LTCX`
-   var factory = new Factory(input)
-   console.log(factory.reactions)
-   var ore = factory.trace('FUEL', 1)
+        //  input = `171 ORE => 8 CNZTR
+        //  7 ZLQW, 3 BMBT, 9 XCVML, 26 XMNCP, 1 WPTQ, 2 MZWV, 1 RJRHP => 4 PLWSL
+        //  114 ORE => 4 BHXH
+        //  14 VRPVC => 6 BMBT
+        //  6 BHXH, 18 KTJDG, 12 WPTQ, 7 PLWSL, 31 FHTLT, 37 ZDVW => 1 FUEL
+        //  6 WPTQ, 2 BMBT, 8 ZLQW, 18 KTJDG, 1 XMNCP, 6 MZWV, 1 RJRHP => 6 FHTLT
+        //  15 XDBXC, 2 LTCX, 1 VRPVC => 6 ZLQW
+        //  13 WPTQ, 10 LTCX, 3 RJRHP, 14 XMNCP, 2 MZWV, 1 ZLQW => 1 ZDVW
+        //  5 BMBT => 4 WPTQ
+        //  189 ORE => 9 KTJDG
+        //  1 MZWV, 17 XDBXC, 3 XCVML => 2 XMNCP
+        //  12 VRPVC, 27 CNZTR => 2 XDBXC
+        //  15 KTJDG, 12 BHXH => 5 XCVML
+        //  3 BHXH, 2 VRPVC => 7 MZWV
+        //  121 ORE => 7 VRPVC
+        //  7 XCVML => 6 RJRHP
+        //  5 BHXH, 4 VRPVC => 5 LTCX`
+        const factory = new Factory(input)
+        console.log(factory.reactions)
+        let ore = factory.trace('FUEL', 1)
 
-   let fuel = 4322975
-   while(true) {
-    ore = factory.trace('FUEL', fuel)
-    console.log([fuel, ore])
-    if (ore > 1000000000000) {
-      console.log(fuel - 1)
-      break
+        let fuel = 4322975
+        while (true) {
+            ore = factory.trace('FUEL', fuel)
+            console.log([fuel, ore])
+            if (ore > 1000000000000) {
+                console.log(fuel - 1)
+                break
+            }
+            fuel++
+        }
     }
-    fuel++
-   }
-
-  }
 }
