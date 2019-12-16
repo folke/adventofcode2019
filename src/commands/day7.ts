@@ -1,4 +1,4 @@
-import { Command } from '@oclif/command'
+export {}
 
 class Computer {
     code: string
@@ -139,64 +139,54 @@ function permutate(input: number[]) {
     return permArr
 }
 
-export default class Day5 extends Command {
-    async run() {
-        try {
-            const code =
-                '3,8,1001,8,10,8,105,1,0,0,21,30,47,64,81,98,179,260,341,422,99999,3,9,1001,9,5,9,4,9,99,3,9,1002,9,5,9,101,4,9,9,102,2,9,9,4,9,99,3,9,102,3,9,9,101,2,9,9,1002,9,3,9,4,9,99,3,9,1001,9,5,9,1002,9,3,9,1001,9,3,9,4,9,99,3,9,1002,9,3,9,101,2,9,9,102,5,9,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,99,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,99'
-            const phases = '9,8,7,6,5'.split(',').map(x => parseInt(x, 10))
+const code =
+    '3,8,1001,8,10,8,105,1,0,0,21,30,47,64,81,98,179,260,341,422,99999,3,9,1001,9,5,9,4,9,99,3,9,1002,9,5,9,101,4,9,9,102,2,9,9,4,9,99,3,9,102,3,9,9,101,2,9,9,1002,9,3,9,4,9,99,3,9,1001,9,5,9,1002,9,3,9,1001,9,3,9,4,9,99,3,9,1002,9,3,9,101,2,9,9,102,5,9,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,2,9,4,9,99,3,9,101,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1001,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,101,2,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,1002,9,2,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,1001,9,1,9,4,9,3,9,102,2,9,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,102,2,9,9,4,9,3,9,1001,9,2,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,2,9,9,4,9,99,3,9,1001,9,2,9,4,9,3,9,101,2,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1001,9,1,9,4,9,3,9,1002,9,2,9,4,9,3,9,101,1,9,9,4,9,3,9,1002,9,2,9,4,9,3,9,102,2,9,9,4,9,99'
+const phases = '9,8,7,6,5'.split(',').map(x => parseInt(x, 10))
 
-            const amplifiers = [
-                new Computer(code),
-                new Computer(code),
-                new Computer(code),
-                new Computer(code),
-                new Computer(code)
-            ]
-            const permutations = permutate(phases)
-            // permutations = [phases];
+const amplifiers = [
+    new Computer(code),
+    new Computer(code),
+    new Computer(code),
+    new Computer(code),
+    new Computer(code)
+]
+const permutations = permutate(phases)
+// permutations = [phases];
 
-            let maxPhases = phases
-            let maxSignal = 0
+let maxPhases = phases
+let maxSignal = 0
 
-            for (let p = 0; p < permutations.length; p++) {
-                const perm = permutations[p]
+for (let p = 0; p < permutations.length; p++) {
+    const perm = permutations[p]
 
-                // Initialize amplifiers with phase setting and start them all
-                for (let i = 0; i < perm.length; i++) {
-                    amplifiers[i].run([perm[i]])
-                }
+    // Initialize amplifiers with phase setting and start them all
+    for (let i = 0; i < perm.length; i++) {
+        amplifiers[i].run([perm[i]])
+    }
 
-                let running = perm.length
-                while (running > 0) {
-                    for (let i = 0; i < perm.length; i++) {
-                        console.log({
-                            amplifier: i,
-                            running: amplifiers[i].running
-                        })
-                        if (amplifiers[i].running) {
-                            const prevI = i == 0 ? 4 : i - 1
-                            amplifiers[i].input.push(
-                                amplifiers[prevI].output.pop() || 0
-                            )
-                            amplifiers[i].continue()
-                            if (!amplifiers[i].running) running--
-                            console.log({
-                                input: amplifiers[i].input,
-                                output: amplifiers[i].output
-                            })
-                        }
-                    }
-                }
-
-                if (amplifiers[4].output[0] > maxSignal) {
-                    maxSignal = amplifiers[4].output[0]
-                    maxPhases = perm
-                }
+    let running = perm.length
+    while (running > 0) {
+        for (let i = 0; i < perm.length; i++) {
+            console.log({
+                amplifier: i,
+                running: amplifiers[i].running
+            })
+            if (amplifiers[i].running) {
+                const prevI = i == 0 ? 4 : i - 1
+                amplifiers[i].input.push(amplifiers[prevI].output.pop() || 0)
+                amplifiers[i].continue()
+                if (!amplifiers[i].running) running--
+                console.log({
+                    input: amplifiers[i].input,
+                    output: amplifiers[i].output
+                })
             }
-            console.log([maxPhases, maxSignal])
-        } catch (error) {
-            this.error(error)
         }
     }
+
+    if (amplifiers[4].output[0] > maxSignal) {
+        maxSignal = amplifiers[4].output[0]
+        maxPhases = perm
+    }
 }
+console.log([maxPhases, maxSignal])

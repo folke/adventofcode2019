@@ -1,20 +1,22 @@
 module.exports = {
     parser: '@typescript-eslint/parser', // Specifies the ESLint parser
     extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:@typescript-eslint/recommended',
         'prettier',
-        'prettier/@typescript-eslint',
-        'plugin:prettier/recommended'
-        // "oclif",
-        // "oclif-typescript"
+        'prettier/@typescript-eslint'
     ],
-    plugins: ['prettier'],
+    plugins: ['@typescript-eslint', 'prettier'],
     parserOptions: {
         ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
         sourceType: 'module', // Allows for the use of imports
         ecmaFeatures: {
             jsx: true // Allows for the parsing of JSX
-        }
+        },
+        project: './tsconfig.json'
     },
     rules: {
         'prettier/prettier': 'error',

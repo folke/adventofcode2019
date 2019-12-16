@@ -7,6 +7,7 @@
 
 <!-- toc -->
 
+-   [adventofcode](#adventofcode)
 -   [Usage](#usage)
 -   [Commands](#commands)
     <!-- tocstop -->
@@ -33,36 +34,30 @@ USAGE
 
 <!-- commands -->
 
--   [`adventofcode day1 [FILE]`](#adventofcode-day1-file)
+-   [`adventofcode day1`](#adventofcode-day1)
 -   [`adventofcode day10`](#adventofcode-day10)
 -   [`adventofcode day11`](#adventofcode-day11)
 -   [`adventofcode day12`](#adventofcode-day12)
 -   [`adventofcode day13`](#adventofcode-day13)
 -   [`adventofcode day14`](#adventofcode-day14)
 -   [`adventofcode day15`](#adventofcode-day15)
--   [`adventofcode day16 [FILE]`](#adventofcode-day16-file)
--   [`adventofcode day2 [FILE]`](#adventofcode-day2-file)
--   [`adventofcode day3 [FILE]`](#adventofcode-day3-file)
--   [`adventofcode day4 [FILE]`](#adventofcode-day4-file)
--   [`adventofcode day5 [FILE]`](#adventofcode-day5-file)
--   [`adventofcode day6 [FILE]`](#adventofcode-day6-file)
+-   [`adventofcode day16`](#adventofcode-day16)
+-   [`adventofcode day17 [FILE]`](#adventofcode-day17-file)
+-   [`adventofcode day2`](#adventofcode-day2)
+-   [`adventofcode day3`](#adventofcode-day3)
+-   [`adventofcode day4`](#adventofcode-day4)
+-   [`adventofcode day5`](#adventofcode-day5)
+-   [`adventofcode day6`](#adventofcode-day6)
 -   [`adventofcode day7`](#adventofcode-day7)
 -   [`adventofcode day8`](#adventofcode-day8)
 -   [`adventofcode day9`](#adventofcode-day9)
 -   [`adventofcode help [COMMAND]`](#adventofcode-help-command)
 
-## `adventofcode day1 [FILE]`
-
-describe the command here
+## `adventofcode day1`
 
 ```
 USAGE
-  $ adventofcode day1 [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ adventofcode day1
 ```
 
 _See code: [src/commands/day1.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day1.ts)_
@@ -121,98 +116,72 @@ USAGE
 
 _See code: [src/commands/day15.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day15.ts)_
 
-## `adventofcode day16 [FILE]`
-
-describe the command here
+## `adventofcode day16`
 
 ```
 USAGE
-  $ adventofcode day16 [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ adventofcode day16
 ```
 
 _See code: [src/commands/day16.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day16.ts)_
 
-## `adventofcode day2 [FILE]`
+## `adventofcode day17 [FILE]`
 
 describe the command here
 
 ```
 USAGE
-  $ adventofcode day2 [FILE]
+  $ adventofcode day17 [FILE]
 
 OPTIONS
   -f, --force
   -h, --help       show CLI help
   -n, --name=name  name to print
+```
+
+_See code: [src/commands/day17.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day17.ts)_
+
+## `adventofcode day2`
+
+```
+USAGE
+  $ adventofcode day2
 ```
 
 _See code: [src/commands/day2.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day2.ts)_
 
-## `adventofcode day3 [FILE]`
-
-describe the command here
+## `adventofcode day3`
 
 ```
 USAGE
-  $ adventofcode day3 [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ adventofcode day3
 ```
 
 _See code: [src/commands/day3.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day3.ts)_
 
-## `adventofcode day4 [FILE]`
-
-describe the command here
+## `adventofcode day4`
 
 ```
 USAGE
-  $ adventofcode day4 [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ adventofcode day4
 ```
 
 _See code: [src/commands/day4.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day4.ts)_
 
-## `adventofcode day5 [FILE]`
-
-describe the command here
+## `adventofcode day5`
 
 ```
 USAGE
-  $ adventofcode day5 [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ adventofcode day5
 ```
 
 _See code: [src/commands/day5.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day5.ts)_
 
-## `adventofcode day6 [FILE]`
-
-describe the command here
+## `adventofcode day6`
 
 ```
 USAGE
-  $ adventofcode day6 [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ adventofcode day6
 ```
 
 _See code: [src/commands/day6.ts](https://github.com/folke/adventofcode/blob/v0.0.0/src/commands/day6.ts)_

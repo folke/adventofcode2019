@@ -1,4 +1,4 @@
-import { Command } from '@oclif/command'
+export {}
 
 function gcd(a: number, b: number): number {
     if (b == 0) {
@@ -35,6 +35,7 @@ class Space {
     findAsteroid(position: number[], vector: number[]) {
         // console.log({vector: vector})
         const xy = position.slice()
+        // eslint-disable-next-line no-constant-condition
         while (true) {
             xy[0] += vector[0]
             xy[1] += vector[1]
@@ -116,9 +117,7 @@ class Space {
     }
 }
 
-export default class Day10 extends Command {
-    async run() {
-        let input = `
+let input = `
 .#..##.###...#######
 ##.############..##.
 .#.######.########.#
@@ -141,7 +140,7 @@ export default class Day10 extends Command {
 ###.##.####.##.#..##
   `
 
-        input = `#..#.#.#.######..#.#...##
+input = `#..#.#.#.######..#.#...##
   ##.#..#.#..##.#..######.#
   .#.##.#..##..#.#.####.#..
   .#..##.#.#..#.#...#...#.#
@@ -167,7 +166,7 @@ export default class Day10 extends Command {
   .##..#####....#####.#.#.#
   #..#..#..##...#..#.#.#.##`
 
-        /**
+/**
 The 1st asteroid to be vaporized is at 11,12.
 The 2nd asteroid to be vaporized is at 12,1.
 The 3rd asteroid to be vaporized is at 12,2.
@@ -181,17 +180,16 @@ The 201st asteroid to be vaporized is at 10,9.
 The 299th and final asteroid to be vaporized is at 11,1.
      */
 
-        const space = new Space(input)
-        while (space.tracePosition([11, 19]) > 0) {}
-        // space.space.forEach(x => {
-        //   console.log(x.map(x => x.toString().padEnd(3)).join(","))
-        // });
-        // console.log(space.part1())
-        // { position: [ 11, 19 ], asteroids: 253 }
+const space = new Space(input)
+// eslint-disable-next-line no-empty
+while (space.tracePosition([11, 19]) > 0) {}
+// space.space.forEach(x => {
+//   console.log(x.map(x => x.toString().padEnd(3)).join(","))
+// });
+// console.log(space.part1())
+// { position: [ 11, 19 ], asteroids: 253 }
 
-        const test = [1, 2, 3, 10, 20, 50, 100, 199, 200, 201, 299]
-        test.forEach(d => {
-            console.log([d, space.destroyed[d - 1]])
-        })
-    }
-}
+const test = [1, 2, 3, 10, 20, 50, 100, 199, 200, 201, 299]
+test.forEach(d => {
+    console.log([d, space.destroyed[d - 1]])
+})

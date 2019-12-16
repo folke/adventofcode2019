@@ -9,12 +9,12 @@
         "strict": true,
         "target": "es2018",
         "plugins": [
-            // {
-            //     "name": "typescript-tslint-plugin",
-            //     "alwaysShowRuleFailuresAsWarnings": true,
-            //     "ignoreDefinitionFiles": true,
-            //     "suppressWhileTypeErrorsPresent": false
-            // }
+            {
+                "name": "typescript-tslint-plugin",
+                "alwaysShowRuleFailuresAsWarnings": true,
+                "ignoreDefinitionFiles": true,
+                "suppressWhileTypeErrorsPresent": false
+            }
         ]
     },
     "include": ["src/**/*"]
