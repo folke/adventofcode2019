@@ -1,10 +1,10 @@
 import { Command } from '@oclif/command'
 
 export default class Day6 extends Command {
+    static data = ''
     async run() {
         const nodes = new Map()
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        data.split('\n').map(orbit => {
+        Day6.data.split('\n').map(orbit => {
             const pair = orbit.split(')')
             if (!nodes.has(pair[0])) {
                 nodes.set(pair[0], [])
@@ -48,8 +48,7 @@ export default class Day6 extends Command {
     }
 }
 
-// eslint-disable-next-line no-var
-var data = `FGY)61Z
+Day6.data = `FGY)61Z
 2BN)LM7
 QXY)TVB
 5M5)Y6C
