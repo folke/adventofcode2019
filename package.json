@@ -6,9 +6,7 @@
         "adventofcode": "./bin/run"
     },
     "bugs": "https://github.com/folke/adventofcode/issues",
-    "dependencies": {
-        "tslib": "^1"
-    },
+    "dependencies": {},
     "devDependencies": {
         "@types/node": "^10",
         "@typescript-eslint/eslint-plugin": "^2.11.0",
@@ -36,7 +34,7 @@
     "license": "MIT",
     "repository": "folke/adventofcode",
     "scripts": {
-        "eslint": "eslint src/**/*.ts"
-    },
-    "types": "lib/index.d.ts"
+        "lint": "eslint src/**/*.ts",
+        "build": "tsc"
+    }
 }
