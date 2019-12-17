@@ -32,7 +32,7 @@
     "license": "MIT",
     "repository": "folke/adventofcode",
     "scripts": {
-        "lint": "eslint src/**/*.ts",
-        "build": "tsc"
+        "lint": "yarn eslint src/**/*.ts",
+        "build": "yarn tsc"
     }
 }
