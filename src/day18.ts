@@ -1,7 +1,7 @@
 import { Grid, readInput } from './utils'
-import assert = require('assert')
 
 class Key {
+    doors: string[] = []
     constructor(public key: string, public position: [number, number], public distance = 0, public bot = 0) {}
 }
 
@@ -35,50 +35,78 @@ export class Solver {
         })
     }
 
-    findKeys(positions: [number, number][], unlocked: string[] = []) {
-        const queue: [number, number][] = []
+    /**
+     * Walks to all cells from the given position and returns all keys with
+     * doors that need to be unlocked to get to that key
+     *
+     * Results are cached for fast retrieval
+     */
+    walk(pos: [number, number]) {
+        const cacheKey = `${pos[0]} ${pos[1]}`
+        let ret = this.cache.get(cacheKey)
+        if (ret) return ret
+        const queue: Key[] = []
         const dists = new Grid<number>()
-        const bots = new Grid<number>()
-        for (const pos of positions) {
-            queue.push(pos)
-            dists.set(pos[0], pos[1], 0)
-            bots.set(pos[0], pos[1], queue.length - 1)
-        }
+        queue.push(new Key('@', pos, 0))
+        dists.set(pos[0], pos[1], 0)
         const keys = new Map<string, Key>()
 
         while (queue.length) {
             const p = queue.pop()
             if (p) {
-                const distance = dists.get(p[0], p[1]) || 0
-                const bot = bots.get(p[0], p[1]) || 0
+                const distance = dists.get(p.position[0], p.position[1]) || 0
                 for (const dp of [
                     [0, 1],
                     [0, -1],
                     [1, 0],
                     [-1, 0]
                 ]) {
-                    const x = p[0] + dp[0]
-                    const y = p[1] + dp[1]
+                    const x = p.position[0] + dp[0]
+                    const y = p.position[1] + dp[1]
                     if (dists.has(x, y) && distance + 1 >= (dists.get(x, y) || 0)) {
                         continue
                     }
                     const s = this.grid.get(x, y)
                     if (s) {
                         const isKey = s.match(/[a-z]/g)
-                        if (isKey && !unlocked.includes(s)) {
-                            keys.set(s, new Key(s, [x, y], distance + 1, bot))
+                        const isDoor = s.match(/[A-Z]/g)
+                        const cell = new Key(s, [x, y], distance + 1)
+                        cell.doors = p.doors.slice()
+                        if (isDoor && !cell.doors.includes(s)) {
+                            cell.doors.push(s)
                         }
-                        if (s == '.' || isKey || unlocked.includes(s.toLowerCase())) {
+                        if (isKey) {
+                            keys.set(s, cell)
+                        }
+                        if (s != '#') {
                             dists.set(x, y, distance + 1)
-                            bots.set(x, y, bot)
-                            queue.push([x, y])
+                            queue.push(cell)
                         }
                     }
                 }
             }
         }
+        ret = [...keys.values()]
+        this.cache.set(cacheKey, ret)
 
-        return [...keys.values()].sort((a, b) => a.distance - b.distance)
+        return ret
+    }
+
+    findKeys(positions: [number, number][], unlocked: string[] = []) {
+        const ret = new Map<string, Key>()
+        for (let p = 0; p < positions.length; p++) {
+            const pos = positions[p]
+            for (const k of this.walk(pos)) {
+                if (unlocked.includes(k.key)) continue
+                const locked = k.doors.filter(x => !unlocked.includes(x.toLowerCase()))
+                if (locked.length) continue
+                k.bot = p
+                const other = ret.get(k.key)
+                if (other && other.distance < k.distance) continue
+                ret.set(k.key, k)
+            }
+        }
+        return [...ret.values()]
     }
 
     solve(robots: [number, number][]) {
@@ -160,11 +188,11 @@ export class Solver {
 }
 
 if (require.main === module) {
-    // Part 1
-    // const solver = new Solver(readInput(18))
-    // assert(solver.part1() == 5068)
+    // // Part 1
+    let solver = new Solver(readInput(18))
+    console.log(solver.part1())
 
     // Part 2
-    const solver = new Solver(readInput(18))
-    solver.part2(true)
+    solver = new Solver(readInput(18))
+    console.log(solver.part2(true))
 }
