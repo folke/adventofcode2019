@@ -2,14 +2,11 @@
     "name": "adventofcode",
     "version": "0.0.0",
     "author": "Folke @folke",
-    "bin": {
-        "adventofcode": "./bin/run"
-    },
     "bugs": "https://github.com/folke/adventofcode/issues",
     "dependencies": {},
     "devDependencies": {
         "@types/jest": "^24.0.24",
-        "@types/node": "^12.12.20",
+        "@types/node": "^12.12.21",
         "@typescript-eslint/eslint-plugin": "^2.11.0",
         "@typescript-eslint/parser": "^2.11.0",
         "eslint": "^6.7.2",

@@ -1,6 +1,8 @@
 {
     "typescript.tsdk": "node_modules/typescript/lib",
     "files.exclude": {
-        "lib": true
+        "dist": true,
+        ".jest": true,
+        "build": true
     }
 }

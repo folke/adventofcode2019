@@ -3,7 +3,7 @@
         "declaration": true,
         "importHelpers": true,
         "module": "commonjs",
-        "outDir": "lib",
+        "outDir": "build",
         // "rootDir": "src",
         "sourceMap": true,
         "strict": true,
@@ -17,5 +17,5 @@
             }
         ]
     },
-    "include": ["src/**/*", "__tests__/**/*"]
+    "include": ["src/**/*", "src /**/*.txt", "__tests__/**/*"]
 }
