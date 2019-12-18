@@ -2,6 +2,7 @@ import { Grid, readInput } from './utils'
 
 class Key {
     doors: string[] = []
+    keys: string[] = []
     constructor(public key: string, public position: [number, number], public distance = 0, public bot = 0) {}
 }
 
@@ -75,6 +76,10 @@ export class Solver {
                         if (isDoor && !cell.doors.includes(s)) {
                             cell.doors.push(s)
                         }
+                        cell.keys = p.keys.slice()
+                        if (isKey && !cell.keys.includes(s)) {
+                            cell.keys.push(s)
+                        }
                         if (isKey) {
                             keys.set(s, cell)
                         }
@@ -92,21 +97,28 @@ export class Solver {
         return ret
     }
 
-    findKeys(positions: [number, number][], unlocked: string[] = []) {
+    findKeys(positions: [number, number][], unlocked = new Set<string>()) {
         const ret = new Map<string, Key>()
         for (let p = 0; p < positions.length; p++) {
             const pos = positions[p]
-            for (const k of this.walk(pos)) {
-                if (unlocked.includes(k.key)) continue
-                const locked = k.doors.filter(x => !unlocked.includes(x.toLowerCase()))
-                if (locked.length) continue
+            key: for (const k of this.walk(pos)) {
+                if (unlocked.has(k.key)) continue
+
+                for (const d of k.doors) {
+                    if (!unlocked.has(d.toLowerCase())) continue key
+                }
+
+                for (const kk of k.keys) {
+                    if (kk != k.key && !unlocked.has(kk)) continue key
+                }
+
                 k.bot = p
                 const other = ret.get(k.key)
                 if (other && other.distance < k.distance) continue
                 ret.set(k.key, k)
             }
         }
-        return [...ret.values()]
+        return ret.values()
     }
 
     solve(robots: [number, number][]) {
@@ -115,10 +127,7 @@ export class Solver {
         for (let i = 0; i < this.allKeys.length; i++) {
             const newPaths = new Map<string, Path>()
             for (const path of paths.values()) {
-                const keys = this.findKeys(
-                    path.robots,
-                    path.keys.map(x => x.key)
-                )
+                const keys = this.findKeys(path.robots, new Set(path.keys.map(x => x.key)))
                 for (const key of keys) {
                     const newPath = new Path(path.robots.slice())
                     newPath.robots[key.bot] = key.position
@@ -153,7 +162,7 @@ export class Solver {
                     shortest = p
                 }
             }
-            console.log(shortest)
+            // console.log(shortest)
             return shortest.distance
         }
     }
@@ -181,7 +190,7 @@ export class Solver {
                     shortest = p
                 }
             }
-            console.log(shortest)
+            // console.log(shortest)
             return shortest.distance
         }
     }
