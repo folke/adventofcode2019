@@ -32,13 +32,11 @@ function intCode(program: number[], input = 0) {
                 halt = true
                 break
             case 1:
-                program[program[i + 3]] =
-                    param(program, i, 1) + param(program, i, 2)
+                program[program[i + 3]] = param(program, i, 1) + param(program, i, 2)
                 skip = 4
                 break
             case 2:
-                program[program[i + 3]] =
-                    param(program, i, 1) * param(program, i, 2)
+                program[program[i + 3]] = param(program, i, 1) * param(program, i, 2)
                 skip = 4
                 break
             case 3:
@@ -62,13 +60,11 @@ function intCode(program: number[], input = 0) {
                 } else skip = 3
                 break
             case 7:
-                program[program[i + 3]] =
-                    param(program, i, 1) < param(program, i, 2) ? 1 : 0
+                program[program[i + 3]] = param(program, i, 1) < param(program, i, 2) ? 1 : 0
                 skip = 4
                 break
             case 8:
-                program[program[i + 3]] =
-                    param(program, i, 1) == param(program, i, 2) ? 1 : 0
+                program[program[i + 3]] = param(program, i, 1) == param(program, i, 2) ? 1 : 0
                 skip = 4
                 break
             default:

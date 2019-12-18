@@ -66,13 +66,11 @@ class Computer {
                 } else skip = 3
                 break
             case 7:
-                this.program[this._address(3)] =
-                    this._value(1) < this._value(2) ? 1 : 0
+                this.program[this._address(3)] = this._value(1) < this._value(2) ? 1 : 0
                 skip = 4
                 break
             case 8:
-                this.program[this._address(3)] =
-                    this._value(1) == this._value(2) ? 1 : 0
+                this.program[this._address(3)] = this._value(1) == this._value(2) ? 1 : 0
                 skip = 4
                 break
             case 9:

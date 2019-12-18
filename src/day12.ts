@@ -11,19 +11,11 @@ class Moon {
     }
 
     potentialEnergy() {
-        return (
-            Math.abs(this.pos[0]) +
-            Math.abs(this.pos[1]) +
-            Math.abs(this.pos[2])
-        )
+        return Math.abs(this.pos[0]) + Math.abs(this.pos[1]) + Math.abs(this.pos[2])
     }
 
     kineticEnergy() {
-        return (
-            Math.abs(this.vel[0]) +
-            Math.abs(this.vel[1]) +
-            Math.abs(this.vel[2])
-        )
+        return Math.abs(this.vel[0]) + Math.abs(this.vel[1]) + Math.abs(this.vel[2])
     }
 
     energy() {
@@ -74,18 +66,8 @@ function lcm(x: number, y: number): number {
 //   new Moon([9, -8, -3]),
 // ];
 
-const moons = [
-    new Moon([-7, -1, 6]),
-    new Moon([6, -9, -9]),
-    new Moon([-12, 2, -7]),
-    new Moon([4, -17, -12])
-]
-const init = [
-    new Moon([-7, -1, 6]),
-    new Moon([6, -9, -9]),
-    new Moon([-12, 2, -7]),
-    new Moon([4, -17, -12])
-]
+const moons = [new Moon([-7, -1, 6]), new Moon([6, -9, -9]), new Moon([-12, 2, -7]), new Moon([4, -17, -12])]
+const init = [new Moon([-7, -1, 6]), new Moon([6, -9, -9]), new Moon([-12, 2, -7]), new Moon([4, -17, -12])]
 
 const steps = 500000
 

@@ -68,13 +68,11 @@ class Computer {
                 } else skip = 3
                 break
             case 7:
-                this.program[this._address(3)] =
-                    this._value(1) < this._value(2) ? 1 : 0
+                this.program[this._address(3)] = this._value(1) < this._value(2) ? 1 : 0
                 skip = 4
                 break
             case 8:
-                this.program[this._address(3)] =
-                    this._value(1) == this._value(2) ? 1 : 0
+                this.program[this._address(3)] = this._value(1) == this._value(2) ? 1 : 0
                 skip = 4
                 break
             case 9:
@@ -216,21 +214,14 @@ class Arcade {
     _processOutput() {
         // console.log(this.program.output)
         for (let i = 0; i < this.program.output.length; i += 3) {
-            const loc = `${this.program.output[i]} ${
-                this.program.output[i + 1]
-            }`
+            const loc = `${this.program.output[i]} ${this.program.output[i + 1]}`
             if (this.program.output[i] == -1) {
                 this.score = this.program.output[i + 2]
                 continue
             }
             this.tiles.set(loc, this.program.output[i + 2])
-            if (this.program.output[i + 2] == 4)
-                this.ball = [this.program.output[i], this.program.output[i + 1]]
-            if (this.program.output[i + 2] == 3)
-                this.paddle = [
-                    this.program.output[i],
-                    this.program.output[i + 1]
-                ]
+            if (this.program.output[i + 2] == 4) this.ball = [this.program.output[i], this.program.output[i + 1]]
+            if (this.program.output[i + 2] == 3) this.paddle = [this.program.output[i], this.program.output[i + 1]]
         }
         this.program.output = []
         // this.draw()

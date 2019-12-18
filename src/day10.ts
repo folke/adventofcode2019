@@ -24,12 +24,7 @@ class Space {
     }
 
     valid(position: number[]) {
-        return (
-            position[0] >= 0 &&
-            position[0] < this.width &&
-            position[1] >= 0 &&
-            position[1] < this.height
-        )
+        return position[0] >= 0 && position[0] < this.width && position[1] >= 0 && position[1] < this.height
     }
 
     findAsteroid(position: number[], vector: number[]) {
@@ -65,9 +60,7 @@ class Space {
                 vectors.push([-vx / d, -vy / d])
             }
         }
-        vectors = vectors.filter(v =>
-            this.valid([v[0] + position[0], v[1] + position[1]])
-        )
+        vectors = vectors.filter(v => this.valid([v[0] + position[0], v[1] + position[1]]))
 
         function rot(v: number, d: number) {
             v += d

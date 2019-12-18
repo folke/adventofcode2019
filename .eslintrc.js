@@ -6,10 +6,16 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:@typescript-eslint/recommended',
+        'plugin:jest/recommended',
         'prettier',
         'prettier/@typescript-eslint'
     ],
-    plugins: ['@typescript-eslint', 'prettier'],
+    env: {
+        node: true,
+        browser: true,
+        jest: true
+    },
+    plugins: ['@typescript-eslint', 'prettier', 'jest'],
     parserOptions: {
         ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
         sourceType: 'module', // Allows for the use of imports
