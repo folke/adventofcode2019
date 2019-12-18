@@ -18,9 +18,7 @@ class Transmission {
         for (let s = 0; s < signal.length; s++) {
             let r = 0
             for (let i = 0; i < signal.length; i++) {
-                const p = this.pattern[
-                    Math.floor((i + 1) / (s + 1)) % this.pattern.length
-                ]
+                const p = this.pattern[Math.floor((i + 1) / (s + 1)) % this.pattern.length]
                 r += signal[i] * p
             }
             this.output.push(Math.abs(r) % 10)

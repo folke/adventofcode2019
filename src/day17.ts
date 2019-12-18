@@ -137,13 +137,7 @@ function ngrams(movesLine: string) {
     for (let ngram = 1; ngram < 20; ngram++) {
         for (let i = 0; i < moves.length; i += 2) {
             const els = moves.slice(i, i + 2 * ngram)
-            if (
-                els.length < 2 * ngram ||
-                els.includes('A') ||
-                els.includes('B') ||
-                els.includes('C')
-            )
-                continue
+            if (els.length < 2 * ngram || els.includes('A') || els.includes('B') || els.includes('C')) continue
             const s = els.join(',')
             if (s.length <= 20) {
                 counts.set(s, (counts.get(s) || 0) + 1)
@@ -158,11 +152,7 @@ function ngrams(movesLine: string) {
 
 const maxDepth = 3
 
-function search(
-    line: string,
-    functions: string[],
-    depth = 0
-): [string, string, string, string] | undefined {
+function search(line: string, functions: string[], depth = 0): [string, string, string, string] | undefined {
     const s = 'ABC'.charAt(depth)
     const counts = ngrams(line)
     for (let f = 0; f < Math.min(maxDepth, counts.length); f++) {

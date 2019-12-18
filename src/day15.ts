@@ -78,11 +78,7 @@ class Maze {
                     // wall
                     this.grid.set(rightPos[0], rightPos[1], this.symbols[0])
                 } else {
-                    this.grid.set(
-                        rightPos[0],
-                        rightPos[1],
-                        this.symbols[right || 0]
-                    )
+                    this.grid.set(rightPos[0], rightPos[1], this.symbols[right || 0])
                     // trace back to previous position
                     this.turnRight()
                     this.turnRight()
@@ -135,10 +131,7 @@ class Maze {
                     // console.log({cell:cell, ahead:ahead, symbol:symbol})
                     if (symbol != '#') {
                         if (dists.has(ahead[0], ahead[1])) {
-                            if (
-                                cell[2] + 1 <
-                                (dists.get(ahead[0], ahead[1]) || 0)
-                            ) {
+                            if (cell[2] + 1 < (dists.get(ahead[0], ahead[1]) || 0)) {
                                 dists.set(ahead[0], ahead[1], cell[2] + 1)
                             }
                         } else {

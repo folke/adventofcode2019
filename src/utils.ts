@@ -68,13 +68,11 @@ export class Machine {
                 } else this.p += 3
                 break
             case OpCode.LessThan:
-                this.program[this._address(3)] =
-                    this._value(1) < this._value(2) ? 1 : 0
+                this.program[this._address(3)] = this._value(1) < this._value(2) ? 1 : 0
                 this.p += 4
                 break
             case OpCode.Equals:
-                this.program[this._address(3)] =
-                    this._value(1) == this._value(2) ? 1 : 0
+                this.program[this._address(3)] = this._value(1) == this._value(2) ? 1 : 0
                 this.p += 4
                 break
             case OpCode.AdjustRelativeBase:
@@ -191,6 +189,13 @@ export class Grid<V> {
         return ret
     }
 
+    clone() {
+        const ret = new Grid<V>()
+        ret.bounds = this.bounds.slice()
+        ret.grid = new Map<string, V>(this.grid)
+        return ret
+    }
+
     draw(missing = ' ') {
         let result = ''
         for (let y = this.bounds[2]; y <= this.bounds[3]; y++) {
@@ -202,4 +207,19 @@ export class Grid<V> {
         }
         return result.slice(0, -1)
     }
+
+    read(input: V[], newRowValue: V) {
+        let y = 0
+        let x = 0
+        for (const c of input) {
+            if (c == newRowValue) y++, (x = 0)
+            else this.set(x++, y, c)
+        }
+    }
+}
+
+import fs = require('fs')
+
+export function readInput(day: number) {
+    return fs.readFileSync(`${__dirname}/day${day}.txt`, 'utf-8')
 }

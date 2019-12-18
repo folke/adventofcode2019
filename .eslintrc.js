@@ -20,11 +20,7 @@ module.exports = {
     },
     rules: {
         'prettier/prettier': 'error',
-        'lines-between-class-members': [
-            'error',
-            'always',
-            { exceptAfterSingleLine: true }
-        ],
+        'lines-between-class-members': ['error', 'always', { exceptAfterSingleLine: true }],
         '@typescript-eslint/explicit-function-return-type': 'off'
     }
 }
