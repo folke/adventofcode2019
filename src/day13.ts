@@ -220,8 +220,10 @@ class Arcade {
                 continue
             }
             this.tiles.set(loc, this.program.output[i + 2])
-            if (this.program.output[i + 2] == 4) this.ball = [this.program.output[i], this.program.output[i + 1]]
-            if (this.program.output[i + 2] == 3) this.paddle = [this.program.output[i], this.program.output[i + 1]]
+            if (this.program.output[i + 2] == 4)
+                this.ball = [this.program.output[i], this.program.output[i + 1]]
+            if (this.program.output[i + 2] == 3)
+                this.paddle = [this.program.output[i], this.program.output[i + 1]]
         }
         this.program.output = []
         // this.draw()

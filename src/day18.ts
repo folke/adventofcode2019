@@ -3,7 +3,12 @@ import { Grid, readInput } from './utils'
 class Key {
     doors: string[] = []
     keys: string[] = []
-    constructor(public key: string, public position: [number, number], public distance = 0, public bot = 0) {}
+    constructor(
+        public key: string,
+        public position: [number, number],
+        public distance = 0,
+        public bot = 0
+    ) {}
 }
 
 class Path {
@@ -173,7 +178,11 @@ export class Solver {
             if (pos) {
                 for (let dx = -1; dx <= 1; dx++) {
                     for (let dy = -1; dy <= 1; dy++) {
-                        this.grid.set(pos[0] + dx, pos[1] + dy, Math.abs(dx) == 1 && Math.abs(dy) == 1 ? '@' : '#')
+                        this.grid.set(
+                            pos[0] + dx,
+                            pos[1] + dy,
+                            Math.abs(dx) == 1 && Math.abs(dy) == 1 ? '@' : '#'
+                        )
                     }
                 }
             }

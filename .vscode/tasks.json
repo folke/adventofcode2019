@@ -4,8 +4,10 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "eslint",
-            "problemMatcher": ["$eslint-stylish"]
+            "type": "typescript",
+            "tsconfig": "tsconfig.json",
+            "problemMatcher": ["$tsc"],
+            "group": "build"
         }
     ]
 }

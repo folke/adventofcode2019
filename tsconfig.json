@@ -1,21 +1,14 @@
 {
     "compilerOptions": {
         "declaration": true,
+        "allowJs": true,
         "importHelpers": true,
         "module": "commonjs",
         "outDir": "build",
-        // "rootDir": "src",
         "sourceMap": true,
         "strict": true,
         "target": "ES2019",
-        "plugins": [
-            {
-                "name": "typescript-tslint-plugin",
-                "alwaysShowRuleFailuresAsWarnings": true,
-                "ignoreDefinitionFiles": true,
-                "suppressWhileTypeErrorsPresent": false
-            }
-        ]
+        "plugins": []
     },
     "include": ["src/**/*", "src /**/*.txt", "__tests__/**/*"]
 }

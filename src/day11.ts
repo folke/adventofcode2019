@@ -79,7 +79,6 @@ class Computer {
                 break
             default:
                 throw `Unknown op code ${op}`
-                break
         }
         this.p += skip
     }
@@ -109,7 +108,6 @@ class Computer {
                 break
             default:
                 throw `Unknown op mode ${mode}`
-                break
         }
         return ret == undefined ? 0 : ret
     }
