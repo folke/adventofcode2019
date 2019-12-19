@@ -25,13 +25,13 @@ export class Machine {
     private waitForInput = false
     private p = 0
     private relativeBase = 0
-    private steps = 0
+    public steps = 0
     constructor(private code: string) {}
 
     private _step() {
         this.steps++
         const opcode = this.program[this.p]
-        const op = parseInt(`${opcode}`.slice(-2))
+        const op = opcode % 100
         switch (op) {
             case OpCode.Halt:
                 this.running = false
@@ -90,29 +90,20 @@ export class Machine {
     }
 
     private _address(paramIdx: number) {
-        const modes = this.program[this.p]
-            .toString()
-            .slice(0, -2)
-            .split('')
-            .map(x => parseInt(x, 10))
-            .reverse()
-        const mode = modes[paramIdx - 1] || 0
-        let ret = 0
+        let p = (this.program[this.p] / 100) >> 0
+        for (let i = 1; i < paramIdx; i++) p = (p / 10) >> 0
+        const mode = p % 10
+
         switch (mode) {
-            case ParameterMode.Position: // position mode
-                ret = this.program[this.p + paramIdx]
-                break
-            case ParameterMode.Immediate: // immediate mode
-                ret = this.p + paramIdx
-                break
-            case ParameterMode.Relative: // relative mode
-                ret = this.relativeBase + this.program[this.p + paramIdx]
-                break
+            case ParameterMode.Position:
+                return this.program[this.p + paramIdx]
+            case ParameterMode.Immediate:
+                return this.p + paramIdx
+            case ParameterMode.Relative:
+                return this.relativeBase + this.program[this.p + paramIdx]
             default:
                 throw `Unknown op mode ${mode}`
-                break
         }
-        return ret == undefined ? 0 : ret
     }
 
     run(input: number[] = [], start = true) {

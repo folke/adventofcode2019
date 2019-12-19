@@ -1,214 +1,22 @@
 export {}
 
-import * as readline from 'readline'
-
-class Computer {
-    code: string
-
-    program: number[] = []
-
-    input: number[] = []
-
-    output: number[] = []
-
-    running = false
-
-    waitForInput = false
-
-    p = 0
-
-    relativeBase = 0
-
-    steps = 0
-
-    constructor(code: string) {
-        this.code = code
-    }
-
-    _step() {
-        this.steps++
-        const opcode = this.program[this.p]
-        const op = parseInt(`${opcode}`.slice(-2))
-        let skip = 0
-        switch (op) {
-            case 99: // halt
-                this.running = false
-                break
-            case 1: // add
-                this.program[this._address(3)] = this._value(1) + this._value(2)
-                skip = 4
-                break
-            case 2: // multiplt
-                this.program[this._address(3)] = this._value(1) * this._value(2)
-                skip = 4
-                break
-            case 3: // input
-                if (this.input.length == 0) {
-                    this.waitForInput = true
-                    break
-                }
-                this.waitForInput = false
-                this.program[this._address(1)] = this.input.shift() || 0
-                skip = 2
-                break
-            case 4: // output
-                this.output.push(this._value(1))
-                skip = 2
-                break
-            case 5: // jump if not zero
-                if (this._value(1) != 0) {
-                    this.p = this._value(2)
-                    skip = 0
-                } else skip = 3
-                break
-            case 6: // jump if zero
-                if (this._value(1) == 0) {
-                    this.p = this._value(2)
-                    skip = 0
-                } else skip = 3
-                break
-            case 7:
-                this.program[this._address(3)] = this._value(1) < this._value(2) ? 1 : 0
-                skip = 4
-                break
-            case 8:
-                this.program[this._address(3)] = this._value(1) == this._value(2) ? 1 : 0
-                skip = 4
-                break
-            case 9:
-                this.relativeBase += this._value(1)
-                skip = 2
-                break
-            default:
-                throw `Unknown op code ${op}`
-                break
-        }
-        this.p += skip
-    }
-
-    _value(paramIdx: number) {
-        return this.program[this._address(paramIdx)]
-    }
-
-    _address(paramIdx: number) {
-        const modes = this.program[this.p]
-            .toString()
-            .slice(0, -2)
-            .split('')
-            .map(x => parseInt(x, 10))
-            .reverse()
-        const mode = modes[paramIdx - 1] || 0
-        let ret = 0
-        switch (mode) {
-            case 0: // position mode
-                ret = this.program[this.p + paramIdx]
-                break
-            case 1: // immediate mode
-                ret = this.p + paramIdx
-                break
-            case 2: // relative mode
-                ret = this.relativeBase + this.program[this.p + paramIdx]
-                break
-            default:
-                throw `Unknown op mode ${mode}`
-                break
-        }
-        return ret == undefined ? 0 : ret
-    }
-
-    run(input: number[] = [], start = true) {
-        this.input = input
-        this.program = this.code.split(',').map(x => parseInt(x, 10))
-        this.running = true
-        this.waitForInput = false
-        this.p = 0
-        this.relativeBase = 0
-        if (start) this.continue()
-    }
-
-    continue() {
-        const start = new Date().getTime()
-        const debug = false
-        let debugData = {
-            step: 0,
-            pointer: 0,
-            relbase: 0,
-            programL: '',
-            programB: '',
-            programA: '',
-            output: ''
-        }
-
-        while (this.p < this.program.length) {
-            if (debug)
-                debugData = {
-                    step: this.steps,
-                    pointer: this.p,
-                    relbase: this.relativeBase,
-                    programL: this.program.slice(this.p, this.p + 3).join(),
-                    programB: this.program.join(),
-                    programA: '',
-                    output: ''
-                }
-            this._step()
-
-            if (debug) {
-                debugData.programA = this.program.join()
-                debugData.output = this.output.join()
-            }
-
-            if (debug && this.steps % 1000 == 0) {
-                const now = new Date().getTime()
-                console.log({
-                    steps: this.steps,
-                    perSecond: (1000 * this.steps) / (now - start)
-                })
-            }
-            // console.log(this.steps)
-            // if (this.output.length > 0) return
-            // if (this.steps > 10) return
-            if (!this.running || this.waitForInput) {
-                return
-            }
-        }
-    }
-}
+import { Machine } from './utils'
 
 class Arcade {
     tiles = new Map()
-
     paddle = [0, 0]
-
     ball = [0, 0]
-
     joystick = 0
-
     score = 0
-
-    program: Computer
-
-    rl: readline.Interface = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout
-    })
+    program: Machine
 
     constructor(code: string) {
-        this.program = new Computer(code)
+        this.program = new Machine(code)
         this.program.run([], false)
         this.program.program[0] = 2
-        readline.cursorTo(process.stdout, 0, 0)
-        readline.clearScreenDown(process.stdout)
+        // readline.cursorTo(process.stdout, 0, 0)
+        // readline.clearScreenDown(process.stdout)
         this.loop()
-    }
-
-    draw() {
-        const chars = [' ', '🔲', '💎', '🛶', '🥎']
-        this.tiles.forEach((v, k: string) => {
-            const pos = k.split(' ').map(x => parseInt(x, 10))
-            readline.cursorTo(process.stdout, pos[0], pos[1])
-            process.stdout.write(chars[v])
-        })
-        // Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 10);
     }
 
     _processOutput() {

@@ -10,7 +10,6 @@ export class Beam {
     check(x: number, y: number): string {
         this.intCodeChecks++
         return new Machine(this.code).run([x, y]).pop() ? '#' : '.'
-        return '.'
     }
 
     get(x: number, y: number) {
