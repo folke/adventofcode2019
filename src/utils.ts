@@ -213,5 +213,5 @@ export class Grid<V> {
 import fs = require('fs')
 
 export function readInput(day: number) {
-    return fs.readFileSync(`${__dirname}/day${day}.txt`, 'utf-8')
+    return fs.readFileSync(`${__dirname}/input/day${day}.txt`, 'utf-8')
 }
