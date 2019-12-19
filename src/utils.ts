@@ -123,6 +123,7 @@ export class Machine {
         this.p = 0
         this.relativeBase = 0
         if (start) this.continue()
+        return this.output
     }
 
     continue() {
@@ -141,11 +142,11 @@ export class Grid<V> {
     bounds = [0, 0, 0, 0] // minX, maxX, minY, maxY
 
     get width(): number {
-        return this.bounds[1] - this.bounds[0] + 1
+        return !this.grid.size ? 0 : this.bounds[1] - this.bounds[0] + 1
     }
 
     get height(): number {
-        return this.bounds[3] - this.bounds[2] + 1
+        return !this.grid.size ? 0 : this.bounds[3] - this.bounds[2] + 1
     }
 
     set(x: number, y: number, value: V) {
