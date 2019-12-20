@@ -22,11 +22,14 @@ export class Machine {
     input: number[] = []
     output: number[] = []
     running = false
+    private code: number[]
     private waitForInput = false
     private p = 0
     private relativeBase = 0
     public steps = 0
-    constructor(private code: string) {}
+    constructor(code: string) {
+        this.code = code.split(',').map(x => parseInt(x, 10))
+    }
 
     private _step() {
         this.steps++
@@ -108,7 +111,7 @@ export class Machine {
 
     run(input: number[] = [], start = true) {
         this.input = input
-        this.program = this.code.split(',').map(x => parseInt(x, 10))
+        this.program = this.code.slice()
         this.running = true
         this.waitForInput = false
         this.p = 0
