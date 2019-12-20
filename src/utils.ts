@@ -84,7 +84,6 @@ export class Machine {
                 break
             default:
                 throw `Unknown op code ${op}`
-                break
         }
     }
 
@@ -163,10 +162,10 @@ export class Grid<V> {
         return this.grid.has(`${x} ${y}`)
     }
 
-    walk(entry: (x: number, y: number, value: V) => void) {
+    walk(walker: (x: number, y: number, value: V) => void) {
         this.grid.forEach((v, k) => {
             const xy = k.split(' ').map(x => parseInt(x, 10))
-            entry(xy[0], xy[1], v)
+            walker(xy[0], xy[1], v)
         })
     }
 
@@ -191,12 +190,12 @@ export class Grid<V> {
         return ret
     }
 
-    draw(missing = ' ') {
+    draw(missing = ' ', padding = 0) {
         let result = ''
         for (let y = this.bounds[2]; y <= this.bounds[3]; y++) {
             let row = ''
             for (let x = this.bounds[0]; x <= this.bounds[1]; x++) {
-                row += this.get(x, y) || missing
+                row += new String(this.get(x, y) || missing).padEnd(padding)
             }
             result += row + '\n'
         }
@@ -210,6 +209,24 @@ export class Grid<V> {
             if (c == newRowValue) y++, (x = 0)
             else this.set(x++, y, c)
         }
+    }
+
+    neighbours(x: number, y: number, walker: (x: number, y: number, value: V) => void) {
+        for (const d of [
+            [0, 1],
+            [0, -1],
+            [1, 0],
+            [-1, 0]
+        ]) {
+            const v = this.get(x + d[0], y + d[1])
+            if (v) walker(x + d[0], y + d[1], v)
+        }
+    }
+
+    static read(input: string) {
+        const grid = new Grid<string>()
+        grid.read(input.split(''), '\n')
+        return grid
     }
 }
 
