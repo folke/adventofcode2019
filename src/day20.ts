@@ -120,5 +120,5 @@ export class Maze {
 
 if (require.main === module) {
     const maze = new Maze(readInput(20))
-    console.log(maze.solvePart2())
+    console.log({ part1: maze.solvePart1(), part2: maze.solvePart2() })
 }
