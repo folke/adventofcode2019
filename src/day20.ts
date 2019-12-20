@@ -78,7 +78,6 @@ export class Maze {
         const queue: [number, number, number, number][] = []
         queue.push([this.start[0], this.start[1], 0, 0])
         const dists: Grid<number>[] = [new Grid<number>()]
-        let shortest = 0
         while (queue.length) {
             const pos = queue.shift()
             if (pos) {
@@ -93,14 +92,10 @@ export class Maze {
 
                 dists[pos[3]].set(pos[0], pos[1], pos[2])
 
-                // Skip if this path length is larger or equal to the shortest path we found already
+                // break when we found the exit
                 if (pos[3] == 0 && pos[0] == this.end[0] && pos[1] == this.end[1]) {
-                    if (shortest == 0 || pos[2] < shortest) {
-                        console.log(pos[2])
-                        shortest = pos[2]
-                    }
+                    break
                 }
-                if (shortest != 0 && pos[2] >= shortest) continue
                 this.grid.neighbours(pos[0], pos[1], (x, y, v) => {
                     if (v != '@' && v != '.') return
                     let next = [x, y]
@@ -115,11 +110,10 @@ export class Maze {
                         if (this.isOuter(x, y)) level--
                         else level++
                     }
-                    if (level >= 0) queue.push([next[0], next[1], distance, level])
+                    queue.push([next[0], next[1], distance, level])
                 })
             }
         }
-        this.grid.set(this.start[0], this.start[1], 'A')
         return dists[0].get(...this.end)
     }
 }
