@@ -14,9 +14,11 @@
         "/lib"
     ],
     "scripts": {
-        "build": "yarn tsc",
-        "lint": "yarn eslint src/**/*.ts",
-        "test": "jest --silent"
+        "build": "tsc",
+        "lint": "eslint src/**/*.ts",
+        "profile": "0x -o --output-dir \"build/0x/{name}{pid}\"",
+        "test": "jest --silent",
+        "tn": "ts-node --transpile-only --pretty"
     },
     "dependencies": {},
     "devDependencies": {
