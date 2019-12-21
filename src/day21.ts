@@ -1,32 +1,9 @@
-import { Machine, readInput } from './utils'
+import { AsciiMachine, readInput } from './utils'
 
-export class SpringDroid {
-    machine: Machine
-    damage = 0
+export class SpringDroid extends AsciiMachine {
     constructor() {
-        this.machine = new Machine(readInput(21))
-        this.machine.run([], false)
-    }
-
-    continue() {
-        this.machine.continue()
-        this.machine.output.forEach(v => {
-            if (v > 255) {
-                this.damage = v
-            } else {
-                process.stdout.write(String.fromCharCode(v))
-            }
-        })
-        this.machine.output.length = 0
-    }
-
-    sendInput(ascii: string) {
-        console.log(ascii)
-        ascii
-            .split('')
-            .map(x => x.charCodeAt(0))
-            .forEach(x => this.machine.input.push(x))
-        this.machine.input.push(10)
+        super(readInput(21))
+        this.run([], false)
     }
 
     static part1() {
@@ -44,14 +21,13 @@ export class SpringDroid {
 
         droid.sendInput('WALK')
         droid.continue()
-        return droid.damage
+        return droid.values.pop()
     }
 
     static part2() {
         const droid = new SpringDroid()
         // one jump lands the droid 4 places further
         droid.continue()
-
         droid.sendInput(`OR A J
 AND B J
 AND C J
@@ -63,7 +39,7 @@ AND T J
 RUN`)
 
         droid.continue()
-        return droid.damage
+        return droid.values.pop()
     }
 }
 

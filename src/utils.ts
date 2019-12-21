@@ -230,6 +230,35 @@ export class Grid<V> {
     }
 }
 
+export class AsciiMachine extends Machine {
+    values: number[] = []
+    processAscii(ascii: string) {
+        process.stdout.write(ascii)
+    }
+
+    continue() {
+        super.continue()
+        let ascii = ''
+        this.output.forEach(v => {
+            if (v > 255) {
+                this.values.push(v)
+            } else {
+                ascii += String.fromCharCode(v)
+            }
+        })
+        this.output.length = 0
+        this.processAscii(ascii)
+    }
+
+    sendInput(ascii: string) {
+        ascii
+            .split('')
+            .map(x => x.charCodeAt(0))
+            .forEach(x => this.input.push(x))
+        if (!ascii.endsWith('\n')) this.input.push(10)
+    }
+}
+
 import fs = require('fs')
 
 export function readInput(day: number) {
