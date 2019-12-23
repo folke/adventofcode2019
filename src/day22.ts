@@ -67,15 +67,7 @@ class LcgSolver {
 }
 
 export class CardShuffler {
-    cards: number[]
-    constructor(public size = 10, tracing = false) {
-        if (tracing) {
-            this.cards = []
-        } else {
-            this.cards = []
-            for (let i = 0; i < size; i++) this.cards.push(i)
-        }
-    }
+    constructor(public size = 10) {}
 
     traceDealNewStack(pos: number) {
         return this.size - pos - 1
@@ -101,75 +93,28 @@ export class CardShuffler {
         throw `Failed to trace with increment ${n} for ${pos}`
     }
 
-    dealNewStack() {
-        // switch direction
-        this.cards = this.cards.reverse()
-    }
-
-    cut(n: number) {
-        // set different start position
-        if (n < 0) {
-            const bottom = this.cards.slice(n)
-            this.cards = bottom.concat(this.cards.slice(0, n))
-        } else {
-            const top = this.cards.slice(0, n)
-            this.cards = this.cards.slice(n).concat(top)
+    shuffle(input: string) {
+        const ret = Array<number>(this.size)
+        for (let i = 0; i < this.size; i++) {
+            ret[i] = this.trace(input, i)
         }
-    }
-
-    dealWithIncrement(n: number) {
-        const stack = new Array<number>(this.cards.length)
-        let pos = 0
-        while (this.cards.length) {
-            const card = this.cards.shift()
-            if (card !== undefined) {
-                stack[pos] = card
-                pos += n
-                pos %= stack.length
-            }
-        }
-        this.cards = stack
-    }
-
-    shuffle(technique: string) {
-        if (technique == 'deal into new stack') return this.dealNewStack()
-        let found = /^deal with increment (\d+)$/.exec(technique)
-        if (found) {
-            return this.dealWithIncrement(+found[1])
-        }
-        found = /^cut (-?\d+)$/.exec(technique)
-        if (found) {
-            return this.cut(+found[1])
-        }
-        throw `Unknown technique: ${technique}`
-    }
-
-    multiShuffle(input: string, count = 1) {
-        input = input.trim()
-        for (let i = 0; i < count % 5005; i++) input.split('\n').forEach(x => this.shuffle(x))
+        return ret
     }
 
     trace(input: string, pos: number) {
-        input = input.trim()
         input
+            .trim()
             .split('\n')
             .reverse()
-            .forEach(technique => {
-                if (technique == 'deal into new stack') {
+            .map(x => x.split(' '))
+            .forEach(t => {
+                if (t[3] == 'stack') {
                     pos = this.traceDealNewStack(pos)
-                    return
-                }
-                let found = /^deal with increment (\d+)$/.exec(technique)
-                if (found) {
-                    pos = this.traceDealWithIncrement(+found[1], pos)
-                    return
-                }
-                found = /^cut (-?\d+)$/.exec(technique)
-                if (found) {
-                    pos = this.traceCut(+found[1], pos)
-                    return
-                }
-                throw `Unknown technique: ${technique}`
+                } else if (t[2] == 'increment') {
+                    pos = this.traceDealWithIncrement(+t[3], pos)
+                } else if (t[0] == 'cut') {
+                    pos = this.traceCut(+t[1], pos)
+                } else throw `Unknown technique: ${t}`
             })
         return pos
     }
@@ -177,7 +122,7 @@ export class CardShuffler {
     getValue(pos: number, shuffles: number, input: string) {
         const deckSize = this.size
 
-        const shuffler = new CardShuffler(deckSize, true)
+        const shuffler = new CardShuffler(deckSize)
         const x0 = BigInt(shuffler.trace(input, pos))
         const x1 = BigInt(shuffler.trace(input, Number(x0)))
 
@@ -187,12 +132,14 @@ export class CardShuffler {
 }
 
 if (require.main === module) {
+    const part1 = new CardShuffler(10007).trace(readInput(22), 6526)
+
     const deckSize = 119315717514047 // m
     const shuffles = 101741582076660 // n
     const pos = 2020
 
-    const shuffler = new CardShuffler(deckSize, true)
+    const shuffler = new CardShuffler(deckSize)
     const part2 = shuffler.getValue(pos, shuffles, readInput(22))
 
-    console.log({ part2: part2 }) // 79855812422607
+    console.log({ part1: part1, part2: part2 }) // 79855812422607
 }
