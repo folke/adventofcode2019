@@ -14,8 +14,20 @@ class Network {
         }
     }
 
+    setInput(address: number, x: number, y: number) {
+        if (address == 255) {
+            this.nat = [x, y]
+            if (this.part1 == -1) this.part1 = y
+        }
+        if (address == 0) {
+            if (y == this.lastZero) this.part2 = y
+            this.lastZero = y
+        }
+        if (address < 50 && address >= 0) this.computers[address].input.push(x, y)
+    }
+
     loop() {
-        for (let l = 0; l < 1000; l++) {
+        while (this.part1 == -1 || this.part2 == -1) {
             let idle = true
             for (const c of this.computers) {
                 if (!c.input.length) c.input.push(-1)
@@ -23,29 +35,10 @@ class Network {
                 while (c.output.length >= 3) {
                     idle = false
                     const traffic = c.output.splice(0, 3)
-                    const address = traffic[0]
-                    if (address == 255) {
-                        this.nat = [traffic[1], traffic[2]]
-                        if (this.part1 == -1) this.part1 = traffic[2]
-                    }
-                    if (address == 0 && traffic[2] == this.lastZero) {
-                        this.part2 = traffic[2]
-                        return
-                    }
-                    if (address < 50 && address >= 0) {
-                        this.computers[address].input.push(traffic[1], traffic[2])
-                    }
+                    this.setInput(traffic[0], traffic[1], traffic[2])
                 }
             }
-            if (idle) {
-                this.computers[0].input.push(...this.nat)
-                if (this.nat[1] == this.lastZero) {
-                    this.part2 = this.nat[1]
-                    return
-                }
-                this.lastZero = this.nat[1]
-                this.computers[0].continue()
-            }
+            if (idle) this.setInput(0, ...this.nat)
         }
     }
 }
