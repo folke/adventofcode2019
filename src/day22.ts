@@ -1,5 +1,71 @@
 import { readInput } from './utils'
 
+class LcgSolver {
+    ainv: bigint
+    a: bigint
+    c: bigint
+
+    constructor(pos: bigint, public x0: bigint, public x1: bigint, public m: bigint) {
+        this.m = m
+        this.a = ((x0 - x1) * this.invmod(pos - x0 + m, m)) % m
+        this.c = (x0 - this.a * pos) % m
+        this.ainv = this.invmod(this.a, m)
+    }
+
+    invmod(a: bigint, n: bigint): bigint {
+        if (n < 0) n = -n
+        if (a < 0) a = n - (-a % n)
+        let t = 0n
+        let nt = 1n
+        let r = n
+        let nr = a % n
+        while (nr != 0n) {
+            const quot = this.div(r, nr)
+            let tmp = nt
+            nt = t - quot * nt
+            t = tmp
+            tmp = nr
+            nr = r - quot * nr
+            r = tmp
+        }
+        if (r > 1) return -1n
+        if (t < 0) t += n
+        return t
+    }
+
+    div(x: bigint, y: bigint) {
+        return (x - (x % y)) / y
+    }
+
+    solve(n: bigint) {
+        const a1 = this.a - BigInt(1)
+        const ma = a1 * this.m
+        const y = this.div(this.modpow(this.a, n, ma) - BigInt(1), a1) * this.c
+        const z = this.modpow(this.a, n, this.m) * this.x0
+        return (y + z) % this.m
+    }
+
+    modpow(a: bigint, b: bigint, n: bigint) {
+        a = a % n
+        let result = BigInt(1)
+        let x = a
+
+        while (b > 0) {
+            const leastSignificantBit = b % BigInt(2)
+            b = this.div(b, BigInt(2))
+
+            if (leastSignificantBit == BigInt(1)) {
+                result = result * x
+                result = result % n
+            }
+
+            x = x * x
+            x = x % n
+        }
+        return result
+    }
+}
+
 export class CardShuffler {
     cards: number[]
     constructor(public size = 10, tracing = false) {
@@ -108,93 +174,25 @@ export class CardShuffler {
         return pos
     }
 
-    getValue(n: bigint, a: bigint, c: bigint, m: bigint, seed: bigint) {
-        return (a ** n * seed + (c * (a ** n - BigInt(1))) / (a - BigInt(1))) % m
-    }
-}
+    getValue(pos: number, shuffles: number, input: string) {
+        const deckSize = this.size
 
-class LcgSolver {
-    ainv: bigint
-    constructor(public a: bigint, public c: bigint, public m: bigint, public seed: bigint) {
-        this.ainv = this.modInverse(a, m)
-    }
+        const shuffler = new CardShuffler(deckSize, true)
+        const x0 = BigInt(shuffler.trace(input, pos))
+        const x1 = BigInt(shuffler.trace(input, Number(x0)))
 
-    modInverse(x: bigint, mod: bigint) {
-        let y = x
-        x = mod
-        let a = BigInt(0)
-        let b = BigInt(1)
-        while (y != BigInt(0)) {
-            let t = b
-            b = this.fd(a - x, y) * b
-            a = t
-            t = y
-            y = x % y
-            x = t
-        }
-        if (x == BigInt(1)) return a % mod
-        else throw 'Reciprocal does not exist'
-    }
-
-    fd(x: bigint, y: bigint) {
-        return (x - (x % y)) / y
-    }
-
-    skip(n: bigint) {
-        const a1 = this.a - BigInt(1)
-        const ma = a1 * this.m
-        const y = this.fd(this.modularPower(this.a, n, ma) - BigInt(1), a1) * this.c
-        const z = this.modularPower(this.a, n, this.m) * this.seed
-        return (y + z) % this.m
-    }
-
-    modularPower(a: bigint, b: bigint, n: bigint) {
-        a = a % n
-        let result = BigInt(1)
-        let x = a
-
-        while (b > 0) {
-            const leastSignificantBit = b % BigInt(2)
-            b = this.fd(b, BigInt(2))
-
-            if (leastSignificantBit == BigInt(1)) {
-                result = result * x
-                result = result % n
-            }
-
-            x = x * x
-            x = x % n
-        }
-        return result
+        const solver = new LcgSolver(BigInt(pos), x0, x1, BigInt(deckSize))
+        return solver.solve(BigInt(shuffles))
     }
 }
 
 if (require.main === module) {
-    // Linear Congruential Generator
-    // m = 119315717514047 (deck size)
-
-    const input = readInput(22)
     const deckSize = 119315717514047 // m
-    const shuffler = new CardShuffler(deckSize, true)
-    const shuffles = BigInt(101741582076660)
+    const shuffles = 101741582076660 // n
     const pos = 2020
 
-    const m = deckSize
-    const seed = shuffler.trace(input, pos)
-    // c is equal to the first generated number at position 0
-    const c = shuffler.trace(input, 0)
+    const shuffler = new CardShuffler(deckSize, true)
+    const part2 = shuffler.getValue(pos, shuffles, readInput(22))
 
-    // const x0 = seed
-    // const x1 = shuffler.trace(input, seed)
-
-    // To get the multiplier, we need to solve the equation below:
-    // x1 = (a * x0 + c) mod m
-    // Using Wolfram Alpha, we get 70994688272734
-    // https://www.wolframalpha.com/input/?i=52691042728113+%3D+%28a+*+14976082037420+%2B+23198222999234%29+mod+119315717514047
-
-    const a = BigInt(70994688272734)
-
-    const solver = new LcgSolver(a, BigInt(c), BigInt(m), BigInt(seed))
-    const part2 = solver.skip(BigInt(shuffles))
     console.log({ part2: part2 }) // 79855812422607
 }

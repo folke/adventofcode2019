@@ -157,3 +157,13 @@ test('trace part 1', () => {
     const shuffler = new CardShuffler(10007, true)
     expect(shuffler.trace(readInput(22), 6526)).toBe(2019)
 })
+
+test('part 2', () => {
+    const deckSize = 119315717514047 // m
+    const shuffles = 101741582076660 // n
+    const pos = 2020
+
+    const shuffler = new CardShuffler(deckSize, true)
+
+    expect(shuffler.getValue(pos, shuffles, readInput(22))).toBe(79855812422607n)
+})
