@@ -72,8 +72,8 @@ test('trace part 1', () => {
 
 test('part 2', () => {
     const deckSize = 119315717514047 // m
-    const shuffles = 101741582076660 // n
-    const pos = 2020
+    const shuffles = 101741582076660n // n
+    const pos = 2020n
 
     const shuffler = new CardShuffler(deckSize)
 

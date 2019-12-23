@@ -1,18 +1,7 @@
 import { readInput } from './utils'
 
-class LcgSolver {
-    ainv: bigint
-    a: bigint
-    c: bigint
-
-    constructor(pos: bigint, public x0: bigint, public x1: bigint, public m: bigint) {
-        this.m = m
-        this.a = ((x0 - x1) * this.invmod(pos - x0 + m, m)) % m
-        this.c = (x0 - this.a * pos) % m
-        this.ainv = this.invmod(this.a, m)
-    }
-
-    invmod(a: bigint, n: bigint): bigint {
+class MathHelper {
+    static invmod(a: bigint, n: bigint): bigint {
         if (n < 0) n = -n
         if (a < 0) a = n - (-a % n)
         let t = 0n
@@ -33,19 +22,11 @@ class LcgSolver {
         return t
     }
 
-    div(x: bigint, y: bigint) {
+    static div(x: bigint, y: bigint) {
         return (x - (x % y)) / y
     }
 
-    solve(n: bigint) {
-        const a1 = this.a - BigInt(1)
-        const ma = a1 * this.m
-        const y = this.div(this.modpow(this.a, n, ma) - BigInt(1), a1) * this.c
-        const z = this.modpow(this.a, n, this.m) * this.x0
-        return (y + z) % this.m
-    }
-
-    modpow(a: bigint, b: bigint, n: bigint) {
+    static modpow(a: bigint, b: bigint, n: bigint) {
         a = a % n
         let result = BigInt(1)
         let x = a
@@ -119,15 +100,23 @@ export class CardShuffler {
         return pos
     }
 
-    getValue(pos: number, shuffles: number, input: string) {
+    getValue(pos: bigint, shuffles: bigint, input: string) {
         const deckSize = this.size
 
         const shuffler = new CardShuffler(deckSize)
-        const x0 = BigInt(shuffler.trace(input, pos))
+        const x0 = BigInt(shuffler.trace(input, Number(pos)))
         const x1 = BigInt(shuffler.trace(input, Number(x0)))
 
-        const solver = new LcgSolver(BigInt(pos), x0, x1, BigInt(deckSize))
-        return solver.solve(BigInt(shuffles))
+        const m = BigInt(this.size)
+        const a = ((x0 - x1) * MathHelper.invmod(pos - x0 + m, m)) % m
+        const c = (x0 - a * pos) % m
+        const n = BigInt(shuffles)
+
+        const a1 = a - 1n
+        const ma = a1 * m
+        const y = MathHelper.div(MathHelper.modpow(a, n, ma) - 1n, a1) * c
+        const z = MathHelper.modpow(a, n, m) * x0
+        return (y + z) % m
     }
 }
 
@@ -135,8 +124,8 @@ if (require.main === module) {
     const part1 = new CardShuffler(10007).trace(readInput(22), 6526)
 
     const deckSize = 119315717514047 // m
-    const shuffles = 101741582076660 // n
-    const pos = 2020
+    const shuffles = 101741582076660n // n
+    const pos = 2020n
 
     const shuffler = new CardShuffler(deckSize)
     const part2 = shuffler.getValue(pos, shuffles, readInput(22))
