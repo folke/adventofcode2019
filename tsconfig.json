@@ -7,7 +7,7 @@
         "outDir": "build",
         "sourceMap": true,
         "strict": true,
-        "target": "ES2019",
+        "target": "ESNext",
         "plugins": [],
         "strictNullChecks": true
     },
