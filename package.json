@@ -14,6 +14,8 @@
         "/lib"
     ],
     "scripts": {
+        "prebbuild": "tsc",
+        "bbuild": "babel src --out-dir lib --extensions .ts",
         "build": "tsc",
         "lint": "eslint src/**/*.ts",
         "profile": "0x -o --output-dir \"build/0x/{name}{pid}\"",
@@ -24,11 +26,11 @@
     "devDependencies": {
         "0x": "4.9.1",
         "@types/jest": "^24.0.24",
-        "@types/node": "^12.12.21",
-        "@typescript-eslint/eslint-plugin": "^2.12.0",
-        "@typescript-eslint/parser": "^2.12.0",
-        "eslint": "^6.7.2",
-        "eslint-config-prettier": "^6.7.0",
+        "@types/node": "^13.1.0",
+        "@typescript-eslint/eslint-plugin": "^2.13.0",
+        "@typescript-eslint/parser": "^2.13.0",
+        "eslint": "^6.8.0",
+        "eslint-config-prettier": "^6.8.0",
         "eslint-plugin-import": "^2.19.1",
         "eslint-plugin-jest": "^23.1.1",
         "eslint-plugin-prettier": "^3.1.2",
@@ -37,7 +39,7 @@
         "prettier-plugin-packagejson": "^2.0.6",
         "ts-jest": "^24.2.0",
         "ts-node": "^8.5.4",
-        "typescript": "^3.7.3"
+        "typescript": "^3.7.4"
     },
     "engines": {
         "node": ">=8.0.0"

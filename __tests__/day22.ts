@@ -72,10 +72,10 @@ test('trace part 1', () => {
 
 test('part 2', () => {
     const deckSize = 119315717514047 // m
-    const shuffles = 101741582076660n // n
-    const pos = 2020n
+    const shuffles = BigInt(101741582076660) // n
+    const pos = BigInt(2020)
 
     const shuffler = new CardShuffler(deckSize)
 
-    expect(shuffler.getValue(pos, shuffles, readInput(22))).toBe(79855812422607n)
+    expect(shuffler.getValue(pos, shuffles, readInput(22))).toBe(BigInt(79855812422607))
 })

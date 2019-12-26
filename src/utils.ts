@@ -232,7 +232,9 @@ export class Grid<V> {
 
 export class AsciiMachine extends Machine {
     values: number[] = []
+    ascii = ''
     processAscii(ascii: string) {
+        this.ascii = ascii
         process.stdout.write(ascii)
     }
 

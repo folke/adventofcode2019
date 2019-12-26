@@ -4,11 +4,11 @@ class MathHelper {
     static invmod(a: bigint, n: bigint): bigint {
         if (n < 0) n = -n
         if (a < 0) a = n - (-a % n)
-        let t = 0n
-        let nt = 1n
+        let t = BigInt(0)
+        let nt = BigInt(1)
         let r = n
         let nr = a % n
-        while (nr != 0n) {
+        while (nr != BigInt(0)) {
             const quot = this.div(r, nr)
             let tmp = nt
             nt = t - quot * nt
@@ -17,7 +17,7 @@ class MathHelper {
             nr = r - quot * nr
             r = tmp
         }
-        if (r > 1) return -1n
+        if (r > 1) return -BigInt(1)
         if (t < 0) t += n
         return t
     }
@@ -112,9 +112,9 @@ export class CardShuffler {
         const c = (x0 - a * pos) % m
         const n = BigInt(shuffles)
 
-        const a1 = a - 1n
+        const a1 = a - BigInt(1)
         const ma = a1 * m
-        const y = MathHelper.div(MathHelper.modpow(a, n, ma) - 1n, a1) * c
+        const y = MathHelper.div(MathHelper.modpow(a, n, ma) - BigInt(1), a1) * c
         const z = MathHelper.modpow(a, n, m) * x0
         return (y + z) % m
     }
@@ -124,8 +124,8 @@ if (require.main === module) {
     const part1 = new CardShuffler(10007).trace(readInput(22), 6526)
 
     const deckSize = 119315717514047 // m
-    const shuffles = 101741582076660n // n
-    const pos = 2020n
+    const shuffles = BigInt(101741582076660) // n
+    const pos = BigInt(2020)
 
     const shuffler = new CardShuffler(deckSize)
     const part2 = shuffler.getValue(pos, shuffles, readInput(22))

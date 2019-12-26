@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
         "declaration": true,
-        "allowJs": true,
+        "allowJs": false,
         "importHelpers": true,
         "module": "commonjs",
         "outDir": "build",
         "sourceMap": true,
         "strict": true,
-        "target": "ESNext",
-        "plugins": [],
-        "strictNullChecks": true
+        "target": "ES2019",
+        "noEmit": false,
+        "plugins": []
     },
     "include": ["src/**/*", "src /**/*.txt", "__tests__/**/*"]
 }
